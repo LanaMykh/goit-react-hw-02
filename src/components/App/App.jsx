@@ -2,20 +2,31 @@ import './App.css';
 import Description from '../Description/Description';
 import Options from '../Options/Options';
 import Feedback from '../Feedback/Feedback';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Notification from '../Notification/Notification';
 
 const App = () => {
 
-  const [feedbacks, setFeedbacks] = useState({
-    good: 0,
-	  neutral: 0,
-    bad: 0
-  })
+  const [feedbacks, setFeedbacks] = useState(() => {
   
-const updateFeedback = feedbackType => {
-   setFeedbacks({ ...feedbacks, [feedbackType]: feedbacks[feedbackType] + 1 });
-}
+    const saveFeedbacks = localStorage.getItem("saveFeedbacks");
+    
+    return (saveFeedbacks === null ? {
+      good: 0,
+      neutral: 0,
+      bad: 0
+    } : JSON.parse(saveFeedbacks));
+    
+  }
+  );
+
+  useEffect(() => {
+    localStorage.setItem("saveFeedbacks",JSON.stringify(feedbacks));
+  }, [feedbacks]);
+  
+  const updateFeedback = feedbackType => {
+    setFeedbacks({ ...feedbacks, [feedbackType]: feedbacks[feedbackType] + 1 });
+  };
   
   const resetFeedback = () => {
     setFeedbacks({
@@ -23,12 +34,10 @@ const updateFeedback = feedbackType => {
       neutral: 0,
       bad: 0,
     });
-}  
+  }; 
 
   const totalFeedback = feedbacks.good + feedbacks.neutral + feedbacks.bad;
-  const positiveFeedback = Math.round((feedbacks.good / totalFeedback) * 100)
-
-
+  const positiveFeedback = Math.round((feedbacks.good / totalFeedback) * 100);
 
   return (
     <>
