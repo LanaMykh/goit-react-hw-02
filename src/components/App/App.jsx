@@ -25,14 +25,16 @@ const updateFeedback = feedbackType => {
     });
 }  
 
-const totalFeedback = feedbacks.good + feedbacks.neutral + feedbacks.bad;
+  const totalFeedback = feedbacks.good + feedbacks.neutral + feedbacks.bad;
+  const positiveFeedback = Math.round((feedbacks.good / totalFeedback) * 100)
+
 
 
   return (
     <>
       <Description />
       <Options updateFeedback={updateFeedback} totalFeedback={totalFeedback} resetFeedback={resetFeedback} />
-      {totalFeedback === 0 ?<Notification/>:<Feedback feedbacks={feedbacks} />}
+      {totalFeedback === 0 ?<Notification/>:<Feedback feedbacks={feedbacks} totalFeedback={totalFeedback} positiveFeedback={positiveFeedback} />}
       
     </>
   );
