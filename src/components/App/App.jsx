@@ -10,11 +10,25 @@ const App = () => {
     good: 0,
 	  neutral: 0,
     bad: 0
-    })
+  })
+  
+const updateFeedback = feedbackType => {
+  if (feedbackType === "good") {
+    setFeedbacks({ ...feedbacks, good: feedbacks.good + 1 });
+  }
+  if (feedbackType === "neutral") {
+    setFeedbacks({ ...feedbacks, neutral: feedbacks.neutral + 1 });
+  }
+  if (feedbackType === "bad") {
+   setFeedbacks({ ...feedbacks, bad: feedbacks.bad + 1 });
+  }
+}
+
+
   return (
     <>
       <Description />
-      <Options />
+      <Options updateFeedback={updateFeedback} />
       <Feedback feedbacks={feedbacks} />
     </>
   );
