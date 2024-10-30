@@ -1,17 +1,21 @@
 import './App.css';
+import Description from '../Description/Description';
+import Options from '../Options/Options';
+import Feedback from '../Feedback/Feedback';
+import { useState } from 'react';
 
 const App = () => {
+
+  const [feedbacks, setFeedbacks] = useState({
+    good: 0,
+	  neutral: 0,
+    bad: 0
+    })
   return (
     <>
-      {/* <Profile
-        name={userData.username}
-        tag={userData.tag}
-        location={userData.location}
-        image={userData.avatar}
-        stats={userData.stats}
-      />
-      <FriendList friends={friends} />
-      <TransactionHistory items={transactions} /> */}
+      <Description />
+      <Options />
+      <Feedback feedbacks={feedbacks} />
     </>
   );
 };
